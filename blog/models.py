@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
-
 from django.db import models
+from django.utils import timezone
 
 
 class User(models.Model):
@@ -11,5 +11,15 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
-class BlogDetails(models.Model):
-    author =
+
+class BlogData(models.Model):
+    author = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150)
+    text = models.TextField()
+    published_date = models.DateTimeField(blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()

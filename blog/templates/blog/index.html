@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Blog</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/index.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Muli|Rubik|Yantramanav" rel="stylesheet">
+</head>
+<body link="#483d8b" alink="#faebd7">
+<h1 align="center">Hello....Somebody</h1>
+<center>
+<a href="{% url 'blog:register' %}">Create your account</a>
+<br>
+<br>
+<a href="{% url 'blog:login' %}">Click here to Login</a>
+    <br>
+    <br>
+</center>
+{% for blog in published_blog_list %}
+    <div>
+        <h3>{{ blog.title }}</h3>
+        <strong >Author : </strong>{{ blog.author }}
+        <br>
+        <strong>Publication Date : </strong>{{ blog.published_date }}
+        <p>{{ blog.text }}</p>
+        <hr>
+    </div>
+{% endfor %}
+<br><br>
+<a  id="one" href="#">About Us</a>&nbsp;
+<a id="two" href="#">Contact Us</a>
+</body>
+</html>

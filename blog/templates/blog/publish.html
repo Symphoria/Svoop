@@ -5,9 +5,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'blog/index.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Muli|Rubik|Yantramanav" rel="stylesheet">
 </head>
-<h1 align="center">Thanks for registering</h1>
-<center>
-<a href="{% url 'blog:login' %}">Go to LogIn page</a><br>
-    <a href="{% url 'blog:index' %}">Go to Home Page</a>
-
-</center>
+<h2 align="center">Your Blog has been published</h2>
+<div align="center">
+    <strong>Title : </strong><p>{{ a_blog.title }}</p><br>
+    <strong>Published Date : </strong><p>{{ a_blog.published_date }}</p><br>
+    <a href="{% url 'blog:myaccount' user.id %}">Go to my account</a>
+</div>
