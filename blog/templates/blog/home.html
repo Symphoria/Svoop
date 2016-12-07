@@ -1,0 +1,32 @@
+{% load static %}
+<html>
+
+<head>
+    <script src="https://use.fontawesome.com/19fb39091d.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>Svoop</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/home.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Permanent+Marker" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <a id="brand" href="#">SVOOP</a>
+        <a align="right" id="signup" class="btn btn-default btn-lg" href="{% url 'blog:register' %}" role="button">Sign
+        Up</a>
+        <a align="right" id="login" class="btn btn-default btn-lg" href="{% url 'blog:login' %}" role="button">Login</a>
+    </div>
+    <div class="sometext">
+        <h1>Express</h1>
+        <p>Without Speaking</p>
+        <a id="index" class="btn btn-primary btn-lg" href="#" role="button">Explore The Podium <i class="fa fa-rocket"
+                                                                                              aria-hidden="true"></i></a>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+
+</html>

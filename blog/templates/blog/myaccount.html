@@ -1,39 +1,46 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>Simple Blog</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/index.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Swoop</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/account.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Muli|Rubik|Yantramanav" rel="stylesheet">
 </head>
+<body>
+<div class="welcome">
 <h1 align="center">Welcome <strong>{{ user.username }}</strong></h1>
-{% if message %}
-    <div>
-    <h2 align="center">{{ message }}</h2>
-    <br></div>
-{% endif %}
-<a href="{% url 'blog:index' %}">Go to HomePage</a>
-<br>
-<center>
-<a href="{% url 'blog:new-blog' user.id %}"><strong>Create Blog</strong></a>
-</center>
+<a href="{% url 'blog:index' %}" class="btn btn-info" role="button" >Go to HomePage</a>
+</div>
 <br><br>
+<br><br>
+{% if message %}
+    <div class="mess">
+    <h2 align="center">{{ message }}</h2>
+    </div>
+{% endif %}
+<br><br><br><br><br>
+<a id="one" href="{% url 'blog:new-blog' user.id %}" class="btn btn-primary btn-lg btn-block"><strong>Create Blog</strong></a>
+<br>
 {% if saved_blogs %}
     <h3 id="three">Your saved blogs are here</h3>
     {% for a_blog in saved_blogs %}
-        <div>
+        <div class="bod">
             <h2>{{ a_blog.title }}</h2>
             <p>{{ a_blog.text }}</p>
-            <a href="{% url 'blog:edit-blog' user.id a_blog.id %}">Edit Blog</a>
+            <a href="{% url 'blog:edit-blog' user.id a_blog.id %}">Edit Blog</a> &nbsp; &nbsp;
             <a href="{% url 'blog:publish-blog' user.id a_blog.id %}">Publish Blog</a>
             <hr>
         </div>
     {% endfor %}
 {% endif %}
-<br>
+<br><br><br>
 {% if published_blogs %}
     <h3 id="four">Your published blogs are here</h3>
     {% for b_blog in published_blogs %}
-        <div>
+        <div class="bod">
             <h2>{{ b_blog.title }}</h2>
             <strong>Published Date </strong>: {{ b_blog.published_date }}
             <p>{{ b_blog.text }}</p>
@@ -41,3 +48,4 @@
         </div>
     {% endfor %}
 {% endif %}
+</body>

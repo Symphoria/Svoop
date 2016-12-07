@@ -1,10 +1,38 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from .forms import UserForm, LoginForm, BlogForm
 from .models import User, BlogData
 from django.urls import reverse
 from django.views import generic
+import sendgrid
+from constant import Constant
 
+def send_mail_to_user(reciever_email, confirmation_url):
+    cons = Constant()
+    sendgrid_object = sendgrid.SendGridAPIClient(apikey=cons.sendgrid_API_key)
+    data = {
+        "personalizations": [
+            {
+                "to": [
+                    {
+                        "email": reciever_email
+                    }
+                ],
+                "subject": "Confirm account"
+            }
+        ],
+        "from": {
+            "email": "hj.harshit007@gmail.com",
+            "name": "Svoop"
+        },
+        "content": [
+            {
+                "type": "text/html",
+                "value": cons.email_template(confirmation_url)
+            }
+        ]
+    }
+    response = sendgrid_object.client.mail.send.post(request_body=data)
 
 def get_form_data(request):
     if request.method == 'POST':
@@ -13,14 +41,19 @@ def get_form_data(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             email = form.cleaned_data['email']
-            if User.objects.filter(username=username).exists():
+            if username is None:
+                error_message = 'Please enter a Username'
+                return render(request, 'blog/form.html', {'error_message': error_message, 'form': form}, )
+            elif User.objects.filter(username=username).exists():
                 error_message = 'This Username already exists'
                 return render(request, 'blog/form.html', {'error_message': error_message, 'form': form}, )
             elif User.objects.filter(email=email).exists():
                 error_message = 'You are a registered user'
                 return render(request, 'blog/form.html', {'error_message': error_message, 'form': form}, )
             else:
-                User.objects.create(username=username, password=password, email=email)
+                newuser = User.objects.create(username=username, password=password, email=email)
+                confirmation_url = "http://127.0.0.1:8000/blog/confirm/" + str(newuser.id)
+                send_mail_to_user(newuser.email, confirmation_url)
                 return render(request, 'blog/thanks.html')
     else:
         form = UserForm()
@@ -63,7 +96,7 @@ def my_account(request, userid):
     else:
         saved_blogs = None
         message = None
-    published_blogs = user.blogdata_set.exclude(published_date=None).order_by('published_date')
+    published_blogs = user.blogdata_set.exclude(published_date=None).order_by('-published_date')
     return render(request, 'blog/myaccount.html',
                   {'saved_blogs': saved_blogs, 'published_blogs': published_blogs, 'user': user, 'message': message})
 
@@ -111,4 +144,4 @@ class IndexView(generic.ListView):
     context_object_name = 'published_blog_list'
 
     def get_queryset(self):
-        return BlogData.objects.order_by('-published_date')[:6]
+        return BlogData.objects.exclude(published_date=None).order_by('-published_date')[:6]

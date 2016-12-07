@@ -1,0 +1,66 @@
+body {
+  background-image: url("login.jpg");
+  background-size: cover;
+}
+
+.regform {
+  width: 60%;
+  margin-left: 450px;
+  margin-top: 40px;
+}
+
+h2 {
+  font-family: 'Quicksand', sans-serif !important;
+  margin-left: 825px;
+  margin-top: 150px !important;
+  color: white !important;
+  font-size: 90px !important;
+}
+
+.form-horizontal {
+  color: white;
+}
+
+.form-control {
+  width: 400px !important;
+  height: 40px !important;
+}
+
+.form-group {
+  margin-bottom: 20px !important;
+}
+
+.form-horizontal .form-group {
+    margin-right: -15px !important;
+    margin-left: 300px !important;
+}
+
+.fa {
+  font-size: 25px !important;
+}
+
+.fa-arrow-right {
+  font-size: 17px !important;
+}
+
+.btn {
+  height: 40px;
+  width: 110px;
+  margin-left: 140px;
+  font-size: 17px !important;
+  border-radius: 150px !important;
+}
+
+.btn-default:hover {
+  background-color: #209bfb !important;
+  color: white !important;
+}
+
+.btn-default:active {
+  background-color: #083151 !important;
+  color: white !important;
+}
+
+.alert {
+  padding: 10px !important;
+}

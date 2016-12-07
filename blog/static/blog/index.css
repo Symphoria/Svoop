@@ -54,6 +54,7 @@ a {
 }
 #sub {
   text-align: center;
+  color: #fff;
   margin-left: 15%;
   margin-top: 10px;
   height: 30px;
@@ -64,7 +65,8 @@ a {
 }
 .foo {
   background-color: rgba(34, 49, 63, 0.8);
-  height: 300px;
+  border-radius: 10px;
+  height: 270px;
   padding-top: 55px;
   margin-top: 12%;
   margin-left: 27%;
@@ -76,8 +78,8 @@ a {
   margin-top: 40px;
   margin-left: 43px;
 }
-body{
-  background: url(http://hd.wallpaperswide.com/thumbs/dark_forest-t2.jpg);
+body {
+  background: url(https://www.walldevil.com/wallpapers/a85/wallpaper-minimalist-desktop-wallpapers-minimalistic.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
 }
