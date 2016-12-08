@@ -4,8 +4,8 @@ from django.views.generic import TemplateView
 
 app_name = 'blog'
 urlpatterns = [
-    url(r'^home/$', TemplateView.as_view(template_name="blog/home.html"), name="home"),
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', TemplateView.as_view(template_name="blog/home.html"), name="home"),
+    url(r'^podium/$', views.IndexView.as_view(), name='index'),
     url(r'^register/$', views.get_form_data, name='register'),
     url(r'^login/$', views.user_login, name='login'),
     url(r'^login/(?P<userid>[0-9]+)/$', views.my_account, name='myaccount'),

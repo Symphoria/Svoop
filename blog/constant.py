@@ -1,6 +1,8 @@
+import os
+
 class Constant:
     def __init__(self):
-        self.sendgrid_API_key = "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"
+        self.sendgrid_API_key = os.environ["sendgrid_key"]
 
     def email_template(self, confirmation_url):
         return """<!DOCTYPE html>

@@ -145,3 +145,8 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return BlogData.objects.exclude(published_date=None).order_by('-published_date')[:6]
+
+def activate_user(userid):
+    new_user = get_object_or_404(User, pk=userid)
+    new_user.is_active = True
+    new_user.save()
