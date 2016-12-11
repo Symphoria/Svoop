@@ -7,6 +7,7 @@ from django.views import generic
 import sendgrid
 from constant import Constant
 
+
 def send_mail_to_user(reciever_email, confirmation_url):
     cons = Constant()
     sendgrid_object = sendgrid.SendGridAPIClient(apikey=cons.sendgrid_API_key)
@@ -34,6 +35,7 @@ def send_mail_to_user(reciever_email, confirmation_url):
     }
     response = sendgrid_object.client.mail.send.post(request_body=data)
 
+
 def get_form_data(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -54,7 +56,7 @@ def get_form_data(request):
                 newuser = User.objects.create(username=username, password=password, email=email)
                 confirmation_url = "http://127.0.0.1:8000/blog/confirm/" + str(newuser.id)
                 send_mail_to_user(newuser.email, confirmation_url)
-                return render(request, 'blog/thanks.html')
+                return HttpResponseRedirect(reverse('blog:thanks'))
     else:
         form = UserForm()
 
@@ -146,7 +148,9 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return BlogData.objects.exclude(published_date=None).order_by('-published_date')[:6]
 
-def activate_user(userid):
+
+def activate_user(request, userid):
     new_user = get_object_or_404(User, pk=userid)
     new_user.is_active = True
     new_user.save()
+    return render(request, 'blog/confirm_user.html')

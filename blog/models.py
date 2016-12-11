@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
+from django.contrib.sessions.models import Session
 
 
 class User(models.Model):
@@ -24,3 +25,8 @@ class BlogData(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
+
+
+class UserSession(models.Model):
+    user = models.ForeignKey(User)
+    session = models.ForeignKey(Session)

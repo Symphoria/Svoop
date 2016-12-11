@@ -1,14 +1,19 @@
 {% load static %}
 
 <head>
+    <script src="https://use.fontawesome.com/19fb39091d.js"></script>
     <meta charset="UTF-8">
     <title>Simple Blog</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/index.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Muli|Rubik|Yantramanav" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/thanks.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans|Nunito+Sans" rel="stylesheet">
 </head>
-<h1 align="center">Thanks for registering</h1>
-<center>
-    <a href="{% url 'blog:login' %}">Go to LogIn page</a><br>
-    <a href="{% url 'blog:index' %}">Go to Home Page</a>
 
-</center>
+<body>
+  <p id="heading" align="center">Thanks for Registering</p>
+    <div class="container">
+      <p>We have sent a confirmation mail to your registered email id. Just hop over to your inbox while we finalize things on our end.
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
