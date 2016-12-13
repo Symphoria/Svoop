@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^login/(?P<userid>[0-9]+)/(?P<blogid>[0-9]+)/$', views.save_blog, name='saved-blogs'),
     url(r'^login/(?P<userid>[0-9]+)/(?P<blogid>[0-9]+)/edit/$', views.edit_blog, name='edit-blog'),
     url(r'^login/(?P<userid>[0-9]+)/(?P<blogid>[0-9]+)/blog-published/$', views.publish_blog, name='publish-blog'),
-    url(r'^thanks/$', TemplateView.as_view(template_name="blog/thanks.html"), name='thanks')
+    url(r'^thanks/$', TemplateView.as_view(template_name="blog/thanks.html"), name='thanks'),
+    url(r'^logging-out/$', views.user_logout, name='logout')
 ]

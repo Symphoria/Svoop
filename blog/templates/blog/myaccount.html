@@ -22,6 +22,7 @@
     </div>
 {% endif %}
 <br><br><br><br><br>
+<a href="{% url 'blog:logout' %}" class="btn btn-primary">Logout</a>
 <a id="one" href="{% url 'blog:new-blog' user.id %}" class="btn btn-primary btn-lg btn-block"><strong>Create Blog</strong></a>
 <br>
 {% if saved_blogs %}

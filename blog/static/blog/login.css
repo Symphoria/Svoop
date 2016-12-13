@@ -1,33 +1,33 @@
 body {
-  background-image: url("login.jpg");
-  background-size: cover;
+    background-image: url("login.jpg");
+    background-size: cover;
 }
 
 .regform {
-  width: 60%;
-  margin-left: 450px;
-  margin-top: 40px;
+    width: 60%;
+    margin-left: 450px;
+    margin-top: 40px;
 }
 
 h2 {
-  font-family: 'Quicksand', sans-serif !important;
-  margin-left: 825px;
-  margin-top: 150px !important;
-  color: white !important;
-  font-size: 90px !important;
+    font-family: 'Quicksand', sans-serif !important;
+    margin-left: 825px;
+    margin-top: 150px !important;
+    color: white !important;
+    font-size: 90px !important;
 }
 
 .form-horizontal {
-  color: white;
+    color: white;
 }
 
 .form-control {
-  width: 400px !important;
-  height: 40px !important;
+    width: 400px !important;
+    height: 40px !important;
 }
 
 .form-group {
-  margin-bottom: 20px !important;
+    margin-bottom: 20px !important;
 }
 
 .form-horizontal .form-group {
@@ -36,31 +36,42 @@ h2 {
 }
 
 .fa {
-  font-size: 25px !important;
+    font-size: 25px !important;
 }
 
 .fa-arrow-right {
-  font-size: 17px !important;
+    font-size: 17px !important;
 }
 
 .btn {
-  height: 40px;
-  width: 110px;
-  margin-left: 140px;
-  font-size: 17px !important;
-  border-radius: 150px !important;
+    height: 40px;
+    width: 110px;
+    margin-left: 140px;
+    font-size: 17px !important;
+    border-radius: 150px !important;
 }
 
 .btn-default:hover {
-  background-color: #209bfb !important;
-  color: white !important;
+    background-color: #209bfb !important;
+    color: white !important;
 }
 
 .btn-default:active {
-  background-color: #083151 !important;
-  color: white !important;
+    background-color: #083151 !important;
+    color: white !important;
 }
 
 .alert {
-  padding: 10px !important;
+    padding: 10px !important;
+}
+
+#id_keep_logged_in {
+    height: 17px;
+    width: 17px;
+}
+
+.checkbox label {
+    margin-left: 405px;
+    min-height: 45px !important;
+    font-size: 16px;
 }

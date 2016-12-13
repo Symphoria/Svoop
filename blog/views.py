@@ -64,25 +64,49 @@ def get_form_data(request):
 
 
 def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            if User.objects.filter(username=username).exists():
-                if User.objects.get(username=username).password == password:
-                    userid = User.objects.get(username=username).id
-                    return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
+    if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False:
+        if request.method == 'POST':
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                keep_logged_in = form.cleaned_data['keep_logged_in']
+                if User.objects.filter(username=username).exists():
+                    if User.objects.get(username=username).password == password:
+                        userid = User.objects.get(username=username).id
+                        request.session['user_id'] = userid
+                        request.session['is_logged_in'] = True
+                        if keep_logged_in == 'off':
+                            request.session.set_expiry(0)
+                        else:
+                            request.session.set_expiry(1300000)
+                        return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
+                    else:
+                        error_message = 'Entered password is incorrect'
+                        return render(request, 'blog/loginform.html', {'error_message': error_message, 'form': form})
                 else:
-                    error_message = 'Entered password is incorrect'
+                    error_message = 'Username does not exist. Check your details or register.'
                     return render(request, 'blog/loginform.html', {'error_message': error_message, 'form': form})
-            else:
-                error_message = 'Username does not exist. Check your details or register.'
-                return render(request, 'blog/loginform.html', {'error_message': error_message, 'form': form})
-    else:
-        form = LoginForm()
+        else:
+            form = LoginForm()
 
-    return render(request, 'blog/loginform.html', {'form': form})
+        return render(request, 'blog/loginform.html', {'form': form})
+    else:
+        if request.session['is_logged_in'] == True:
+            '''if request.session.get_expiry_age() == 1209600:
+                form = LoginForm()
+                return render(request, 'blog/loginform.html', {'form': form})
+            else:'''
+            userid = request.session['user_id']
+            return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
+        else:
+            form = LoginForm()
+            return render(request, 'blog/loginform.html', {'form': form})
+
+
+def user_logout(request):
+    request.session['is_logged_in'] = False
+    return HttpResponseRedirect(reverse('blog:index'))
 
 
 def my_account(request, userid):
