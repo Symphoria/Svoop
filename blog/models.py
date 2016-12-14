@@ -9,6 +9,7 @@ class User(models.Model):
     password = models.CharField(max_length=200)
     email = models.CharField(max_length=200, default=None)
     is_active = models.BooleanField(default=False)
+    image = models.CharField(max_length=255)
 
     def __str__(self):
         return self.username

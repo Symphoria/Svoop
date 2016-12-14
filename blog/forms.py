@@ -17,3 +17,7 @@ class LoginForm(forms.Form):
     username = forms.CharField(label='Username', max_length=200)
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     keep_logged_in = forms.CharField(label='keep_logged_in')
+
+
+class PhotoForm(forms.Form):
+    image = forms.ImageField(label='image')

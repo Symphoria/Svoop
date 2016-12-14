@@ -1,11 +1,21 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from .forms import UserForm, LoginForm, BlogForm
+from .forms import UserForm, LoginForm, BlogForm, PhotoForm
 from .models import User, BlogData
 from django.urls import reverse
 from django.views import generic
 import sendgrid
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import os
 from constant import Constant
+
+cloudinary.config(
+    cloud_name=os.environ["my_cloud_name"],
+    api_key=os.environ["my_api_key"],
+    api_secret=os.environ["my_api_secret"]
+)
 
 
 def send_mail_to_user(reciever_email, confirmation_url):
@@ -93,10 +103,6 @@ def user_login(request):
         return render(request, 'blog/loginform.html', {'form': form})
     else:
         if request.session['is_logged_in'] == True:
-            '''if request.session.get_expiry_age() == 1209600:
-                form = LoginForm()
-                return render(request, 'blog/loginform.html', {'form': form})
-            else:'''
             userid = request.session['user_id']
             return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
         else:
@@ -122,9 +128,15 @@ def my_account(request, userid):
     else:
         saved_blogs = None
         message = None
+    if user.image is not None:
+        image_url = cloudinary.CloudinaryImage(user.image).build_url(width=200, height=200, crop='thumb',
+                                                                     gravity='face')
+    else:
+        image_url = None
     published_blogs = user.blogdata_set.exclude(published_date=None).order_by('-published_date')
     return render(request, 'blog/myaccount.html',
-                  {'saved_blogs': saved_blogs, 'published_blogs': published_blogs, 'user': user, 'message': message})
+                  {'saved_blogs': saved_blogs, 'published_blogs': published_blogs, 'user': user, 'message': message,
+                   'image_url': image_url})
 
 
 def new_blog(request, userid):
@@ -178,3 +190,15 @@ def activate_user(request, userid):
     new_user.is_active = True
     new_user.save()
     return render(request, 'blog/confirm_user.html')
+
+
+def set_user_image(request, userid):
+    user = get_object_or_404(User, pk=userid)
+    image = request.FILES['image']
+    if user.image is not None:
+        cloudinary.uploader.destroy(user.image)
+    image_obj = cloudinary.uploader.upload(image,
+                                           eager={'width': 200, 'height': 200, 'crop': 'thumb', 'gravity': 'face'})
+    user.image = image_obj['public_id']
+    user.save()
+    return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
