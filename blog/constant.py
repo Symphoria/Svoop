@@ -21,7 +21,7 @@ class Constant:
 </div>
 <div class="container">
     <p style="font-family: 'PT Sans', sans-serif;">We, the team at Svoop, are very happy to have another member join the
-        Svoop community. We are always ready to welcome another enthusiast who wants to express herself to the
+        Svoop community. We are always ready to welcome another enthusiast who wants to express himself/herself to the
         world.<br><br> Svoop is a platform that allow thinkers and believers such
         as yourself to broadcast to the world what you think, feel and believe. Really liked a movie you just watched?
         Write a review. Have a story to tell or maybe an idea? Tell the world. It is custom made just for you.<br><br>Svoop

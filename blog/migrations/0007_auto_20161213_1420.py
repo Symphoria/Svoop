@@ -15,12 +15,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='user',
-            name='is_active',
-            field=models.BooleanField(default=False),
-        ),
-        migrations.AddField(
-            model_name='user',
             name='user_image',
             field=cloudinary.models.CloudinaryField(blank=True, max_length=255, null=True),
         ),
+        '''migrations.AddField(
+            model_name='user',
+            name='is_active',
+            field=models.BooleanField(default=False),
+        ),'''
     ]

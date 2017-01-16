@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from .forms import UserForm, LoginForm, BlogForm, PhotoForm
+from .forms import UserForm, LoginForm, BlogForm
 from .models import User, BlogData
 from django.urls import reverse
 from django.views import generic
@@ -10,6 +10,10 @@ import cloudinary.uploader
 import cloudinary.api
 import os
 from constant import Constant
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from serializers import BlogSerializer, UserSerializer
 
 cloudinary.config(
     cloud_name=os.environ["my_cloud_name"],
@@ -81,7 +85,7 @@ def user_login(request):
                 username = form.cleaned_data['username']
                 password = form.cleaned_data['password']
                 keep_logged_in = form.cleaned_data['keep_logged_in']
-                if User.objects.filter(username=username).exists():
+                if User.objects.filter(username=username, is_active=True).exists():
                     if User.objects.get(username=username).password == password:
                         userid = User.objects.get(username=username).id
                         request.session['user_id'] = userid
@@ -92,7 +96,7 @@ def user_login(request):
                             request.session.set_expiry(1300000)
                         return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
                     else:
-                        error_message = 'Entered password is incorrect'
+                        error_message = 'Incorrect Credentials'
                         return render(request, 'blog/loginform.html', {'error_message': error_message, 'form': form})
                 else:
                     error_message = 'Username does not exist. Check your details or register.'
@@ -102,7 +106,7 @@ def user_login(request):
 
         return render(request, 'blog/loginform.html', {'form': form})
     else:
-        if request.session['is_logged_in'] == True:
+        if request.session['is_logged_in'] is True:
             userid = request.session['user_id']
             return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
         else:
@@ -116,7 +120,7 @@ def user_logout(request):
 
 
 def my_account(request, userid):
-    user = User.objects.get(pk=userid)
+    user = get_object_or_404(User, pk=userid)
     try:
         all_blogs = user.blogdata_set.all()[0]
     except IndexError:
@@ -202,3 +206,64 @@ def set_user_image(request, userid):
     user.image = image_obj['public_id']
     user.save()
     return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
+
+
+class UpdateUpvotes(APIView):
+    def put(self, request):
+        blog_id = request.data['blogid']
+        user_id = request.data['user_id']
+
+        blog_obj = BlogData.objects.filter(pk=blog_id).first()
+        user = User.objects.filter(pk=user_id).first()
+
+        if blog_obj and user:
+            blog_obj.upvotes += 1
+            blog_obj.save()
+            user.upvoted_blogs.add(blog_obj)
+            return Response({'message': 'Upvotes incremented'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'could not upvote...'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class UserDataView(APIView):
+    def get(self, request):
+        user_id = request.query_params['userId']
+        user = User.objects.filter(pk=user_id).first()
+
+        if user:
+            if user.image is None:
+                image_url = "http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png"
+            else:
+                image_url = cloudinary.CloudinaryImage(user.image).build_url(width=200, height=200, crop='thumb',
+                                                                             gravity='face')
+
+            payload = UserSerializer(instance=user).data
+
+            json = {
+                'user': payload,
+                'imageURL': image_url
+            }
+
+            return Response(json, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class AllBlogView(APIView):
+    def get(self, request):
+        user_id = request.query_params['userId']
+        page_no = int(request.query_params['pageNo'])
+
+        user = get_object_or_404(User, pk=user_id)
+        blog_id_list = [blog.id for blog in user.blogdata_set.all()]
+        upvoted_blog_list = [blog.id for blog in user.upvoted_blogs.all()]
+        blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
+            '-published_date')[10 * (page_no - 1):10 * page_no]
+        payload = BlogSerializer(instance=blog_queryset, many=True).data
+
+        json = {
+            'blogData': payload,
+            'blogList': upvoted_blog_list
+        }
+
+        return Response(json, status=status.HTTP_200_OK)
