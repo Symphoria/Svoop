@@ -14,6 +14,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from serializers import BlogSerializer, UserSerializer
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 cloudinary.config(
     cloud_name=os.environ["my_cloud_name"],
@@ -261,16 +262,28 @@ class AllBlogView(APIView):
 
         if type == 'recent':
             blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
-                '-published_date')[10 * (page_no - 1):10 * page_no]
+                '-published_date')
         else:
             blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
-                '-upvotes')[10 * (page_no - 1):10 * page_no]
+                '-upvotes')
 
-        payload = BlogSerializer(instance=blog_queryset, many=True).data
+        paginator = Paginator(blog_queryset, 10)
+        try:
+            paged_blogs = paginator.page(page_no)
+        except PageNotAnInteger:
+            paged_blogs = paginator.page(1)
+        except EmptyPage:
+            paged_blogs = paginator.page(paginator.num_pages)
+        previous_exists = paged_blogs.has_previous()
+        next_exists = paged_blogs.has_next()
+
+        payload = BlogSerializer(instance=paged_blogs, many=True).data
 
         json = {
             'blogData': payload,
-            'blogList': upvoted_blog_list
+            'blogList': upvoted_blog_list,
+            'hasPrevious': previous_exists,
+            'hasNext': next_exists
         }
 
         return Response(json, status=status.HTTP_200_OK)
