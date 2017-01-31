@@ -253,12 +253,19 @@ class AllBlogView(APIView):
     def get(self, request):
         user_id = request.query_params['userId']
         page_no = int(request.query_params['pageNo'])
+        type = request.query_params['type']
 
         user = get_object_or_404(User, pk=user_id)
         blog_id_list = [blog.id for blog in user.blogdata_set.all()]
         upvoted_blog_list = [blog.id for blog in user.upvoted_blogs.all()]
-        blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
-            '-published_date')[10 * (page_no - 1):10 * page_no]
+
+        if type == 'recent':
+            blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
+                '-published_date')[10 * (page_no - 1):10 * page_no]
+        else:
+            blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
+                '-upvotes')[10 * (page_no - 1):10 * page_no]
+
         payload = BlogSerializer(instance=blog_queryset, many=True).data
 
         json = {
