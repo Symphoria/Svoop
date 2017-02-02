@@ -117,7 +117,7 @@ def user_login(request):
 
 def user_logout(request):
     request.session['is_logged_in'] = False
-    return HttpResponseRedirect(reverse('blog:index'))
+    return HttpResponseRedirect(reverse('blog:home'))
 
 
 def my_account(request, userid):
@@ -228,7 +228,7 @@ class UpdateUpvotes(APIView):
 
 class UserDataView(APIView):
     def get(self, request):
-        user_id = request.query_params['userId']
+        user_id = request.GET.get('userId')
         user = User.objects.filter(pk=user_id).first()
 
         if user:

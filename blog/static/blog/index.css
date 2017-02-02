@@ -1,85 +1,14 @@
-h1 {
-    font-family: 'Muli', sans-serif;
-    font-size: 52px;
+#Userimage {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-top: 5px;
 }
-h2 {
-    font-family: 'Muli', sans-serif;
+
+.navbar-header > .navbar-brand {
     font-size: 25px;
 }
-div {
-    font-family: 'Rubik', sans-serif;
-    margin-left: 25px;
-    margin-right: 25px;
-}
-h3 {
-    font-family: 'Yantramanav', sans-serif;
-    font-size: 28px;
 
-}
-p {
-    font-family: 'Architects Daughter', cursive;
-    font-size: 23px;
-}
-a {
-    font-family: 'Rubik', sans-serif;
-    font-size: 20px;
-}
-#one {
-    font-size: 15px;
-    margin-left: 25px;
-}
-#two {
-    font-size: 15px;
-}
-#three {
-    font-family: 'Sarala', sans-serif;
-    font-size: 28px;
-    margin-left: 25px;
-    border-bottom: solid rebeccapurple;
-}
-#four {
-    font-family: 'Sarala', sans-serif;
-    font-size: 28px;
-    margin-left: 25px;
-    border-bottom: solid rebeccapurple;
-}
-.form {
-    text-align: center;
-    margin-left: 15%;
-    margin-bottom: 17px;
-    height: 40px;
-    width: 330px;
-    border-radius: 2px;
-    border-style: none;
-}
-#sub {
-  text-align: center;
-  color: #fff;
-  margin-left: 15%;
-  margin-top: 10px;
-  height: 30px;
-  width: 85px;
-  background-color: #26A65B;
-  border-style: none;
-  border-radius: 2px;
-}
-.foo {
-  background-color: rgba(34, 49, 63, 0.8);
-  border-radius: 10px;
-  height: 270px;
-  padding-top: 55px;
-  margin-top: 12%;
-  margin-left: 27%;
-  padding-right: 100px;
-  width: 510px;
-  text-align: center;
-}
-.pi {
-  margin-top: 40px;
-  margin-left: 43px;
-}
-body {
-  background: url(https://www.walldevil.com/wallpapers/a85/wallpaper-minimalist-desktop-wallpapers-minimalistic.jpg);
-  background-repeat: no-repeat;
-  background-size: 100%;
+#username > .username {
+    font-size: 17px;
 }
