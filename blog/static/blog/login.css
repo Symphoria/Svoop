@@ -21,9 +21,12 @@ h2 {
     color: white;
 }
 
-.form-control {
+input.form-control.form {
     width: 400px !important;
-    height: 40px !important;
+    height: 50px !important;
+    font-size: 18px !important;
+    font-family: 'Quicksand', sans-serif !important;
+    font-weight: 700 !important;
 }
 
 .form-group {

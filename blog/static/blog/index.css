@@ -2,13 +2,77 @@
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    margin-top: 5px;
+    margin-top: 9px;
 }
 
-.navbar-header > .navbar-brand {
-    font-size: 25px;
+#brand {
+    font-size: 44px;
+    font-family: 'Permanent Marker', cursive;
 }
 
-#username > .username {
+#username>.username {
     font-size: 17px;
+    margin-top: 3px;
+}
+
+ul.navbar-nav.nav>li>a>#podium {
+    margin-left: 343px;
+    font-size: 40px;
+    font-family: 'Quicksand', cursive;
+}
+
+.dropdown-toggle {
+        margin-top: 4px;
+}
+
+.left-wrapper {
+    background-color: #083151;
+}
+
+.feed-wrapper {
+    background-color: white;
+}
+
+.box {
+    background-color: white;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    position: relative;
+}
+
+.title {
+    padding-left: 20px;
+    padding-top: 20px;
+    font-size: 32px;
+    padding-right: 20px;
+    font-family: 'Quicksand', cursive;
+}
+
+.matter {
+    padding-left: 20px;
+    font-size: 16px;
+    padding-right: 20px;
+    padding-bottom: 15px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.divider {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.upvote {
+    margin-left: 20px;
+    border-radius: 35px;
+}
+
+.badge {
+    margin-left: 5px;
+}
+
+.downvote {
+    border: 0px;
+    color: #2e6da4;
 }

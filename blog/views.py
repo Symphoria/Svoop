@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect
 from .forms import UserForm, LoginForm, BlogForm
 from .models import User, BlogData
 from django.urls import reverse
-from django.views import generic
 import sendgrid
 import cloudinary
 import cloudinary.uploader
@@ -122,26 +121,29 @@ def user_logout(request):
 
 def my_account(request, userid):
     user = get_object_or_404(User, pk=userid)
-    try:
-        all_blogs = user.blogdata_set.all()[0]
-    except IndexError:
+    if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False:
+        return HttpResponseRedirect(reverse('blog:login'))
+    else:
+        try:
+            all_blogs = user.blogdata_set.all()[0]
+        except IndexError:
+            return render(request, 'blog/myaccount.html',
+                          {'message': "You have not created any blog.Click on Create Blog to create a blog", 'user': user})
+        if len(user.blogdata_set.filter(published_date=None)) != 0:
+            saved_blogs = user.blogdata_set.filter(published_date=None).order_by('-created_date')
+            message = 'You have some unpublished blogs'
+        else:
+            saved_blogs = None
+            message = None
+        if user.image is not None:
+            image_url = cloudinary.CloudinaryImage(user.image).build_url(width=200, height=200, crop='thumb',
+                                                                         gravity='face')
+        else:
+            image_url = None
+        published_blogs = user.blogdata_set.exclude(published_date=None).order_by('-published_date')
         return render(request, 'blog/myaccount.html',
-                      {'message': "You have not created any blog.Click on Create Blog to create a blog", 'user': user})
-    if len(user.blogdata_set.filter(published_date=None)) != 0:
-        saved_blogs = user.blogdata_set.filter(published_date=None).order_by('-created_date')
-        message = 'You have some unpublished blogs'
-    else:
-        saved_blogs = None
-        message = None
-    if user.image is not None:
-        image_url = cloudinary.CloudinaryImage(user.image).build_url(width=200, height=200, crop='thumb',
-                                                                     gravity='face')
-    else:
-        image_url = None
-    published_blogs = user.blogdata_set.exclude(published_date=None).order_by('-published_date')
-    return render(request, 'blog/myaccount.html',
-                  {'saved_blogs': saved_blogs, 'published_blogs': published_blogs, 'user': user, 'message': message,
-                   'image_url': image_url})
+                      {'saved_blogs': saved_blogs, 'published_blogs': published_blogs, 'user': user, 'message': message,
+                       'image_url': image_url})
 
 
 def new_blog(request, userid):
@@ -182,19 +184,18 @@ def publish_blog(request, userid, blogid):
     return render(request, 'blog/publish.html', {'user': user, 'a_blog': a_blog})
 
 
-class IndexView(generic.ListView):
-    template_name = 'blog/index.html'
-    context_object_name = 'published_blog_list'
-
-    def get_queryset(self):
-        return BlogData.objects.exclude(published_date=None).order_by('-published_date')[:6]
+def index_view(request, userid):
+    if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False:
+        return HttpResponseRedirect(reverse('blog:login'))
+    else:
+        return render(request, 'blog/index.html')
 
 
 def activate_user(request, userid):
     new_user = get_object_or_404(User, pk=userid)
     new_user.is_active = True
     new_user.save()
-    return render(request, 'blog/confirm_user.html')
+    return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
 
 
 def set_user_image(request, userid):
@@ -252,9 +253,9 @@ class UserDataView(APIView):
 
 class AllBlogView(APIView):
     def get(self, request):
-        user_id = request.query_params['userId']
-        page_no = int(request.query_params['pageNo'])
-        type = request.query_params['type']
+        user_id = request.GET['userId']
+        page_no = int(request.GET['pageNo'])
+        type = request.GET['type']
 
         user = get_object_or_404(User, pk=user_id)
         blog_id_list = [blog.id for blog in user.blogdata_set.all()]
