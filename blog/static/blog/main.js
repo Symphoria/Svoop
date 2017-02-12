@@ -2,13 +2,16 @@ var self = this;
 var pageNo = 1;
 var type = 'recent';
 
-if (localStorage.getItem("userId") === null) {
-    var siteURL = window.location.href;
-    var userid = siteURL.split("/")[5];
-    localStorage.setItem('userId', userid);
-} else {
-    var userid = localStorage.getItem("userId");
-}
+// if (localStorage.getItem("userId") === null) {
+//     var siteURL = window.location.href;
+//     var userid = siteURL.split("/")[5];
+//     localStorage.setItem('userId', userid);
+// } else {
+//     var userid = localStorage.getItem("userId");
+// }
+
+var siteURL = window.location.href;
+var userid = siteURL.split("/")[5];
 
 document.addEventListener('DOMContentLoaded', function() {
     $.ajax({
@@ -39,8 +42,8 @@ function getBlogData() {
                     "<hr class='divider'>" +
                     "<p class='matter'>" + JSONdata.blogData[i].text + "</p>";
 
-                if (JSONdata.blogData[i].id in JSONdata.blogList) {
-                    box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote'" + "disabled='disabled'" + ">Upvote<span class='badge'>" + JSONdata.blogData[i].upvotes + "</span></button>";
+                if (JSONdata.blogList.indexOf(JSONdata.blogData[i].id) > -1) {
+                    box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote' disabled='disabled'>Upvote<span class='badge'>" + JSONdata.blogData[i].upvotes + "</span></button>";
                 } else {
                     box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote'>Upvote<span class='badge'>" + JSONdata.blogData[i].upvotes + "</span></button>";
                 }
@@ -51,5 +54,5 @@ function getBlogData() {
             }
         }
     })
-};
+}
 console.log('done!!!!!');
