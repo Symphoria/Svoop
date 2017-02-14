@@ -213,18 +213,25 @@ def set_user_image(request, userid):
 class UpdateUpvotes(APIView):
     def put(self, request):
         blog_id = request.data['blogid']
-        user_id = request.data['user_id']
+        user_id = request.data['userid']
+        operation = request.data['operation']
 
         blog_obj = BlogData.objects.filter(pk=blog_id).first()
         user = User.objects.filter(pk=user_id).first()
 
         if blog_obj and user:
-            blog_obj.upvotes += 1
+            if operation == 'upvote':
+                blog_obj.upvotes += 1
+                user.upvoted_blogs.add(blog_obj)
+            else:
+                blog_obj.upvotes -= 1
+                if user.upvoted_blogs.filter(pk=blog_id).first():
+                    user.upvoted_blogs.remove(blog_obj)
             blog_obj.save()
-            user.upvoted_blogs.add(blog_obj)
-            return Response({'message': 'Upvotes incremented'}, status=status.HTTP_200_OK)
+
+            return Response({'message': 'Upvotes updated'}, status=status.HTTP_200_OK)
         else:
-            return Response({'message': 'could not upvote...'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': 'There was some error...'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class UserDataView(APIView):
