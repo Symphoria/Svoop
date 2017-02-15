@@ -1,7 +1,10 @@
 var self = this;
-var pageNo = 1;
-var type = 'recent';
-var blogData = [];
+var globalObject = {
+    pageNo: 1,
+    type: 'recent',
+    blogData: [],
+    userid: window.location.href.split("/")[5]
+};
 
 // if (localStorage.getItem("userId") === null) {
 //     var siteURL = window.location.href;
@@ -11,14 +14,14 @@ var blogData = [];
 //     var userid = localStorage.getItem("userId");
 // }
 
-var siteURL = window.location.href;
-var userid = siteURL.split("/")[5];
+// var siteURL = window.location.href;
+// var userid = siteURL.split("/")[5];
 
 document.addEventListener('DOMContentLoaded', function() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: 'http://127.0.0.1:8000/blog/user-data/?userId=' + self.userid,
+        url: 'http://127.0.0.1:8000/blog/user-data/?userId=' + self.globalObject.userid,
         success: function(data) {
             var userName = data.user.username;
             var imageURL = data.imageURL;
@@ -37,7 +40,7 @@ function changeUpvotes(blogId, operation) {
         dataType: 'json',
         data: {
             'blogid': blogId,
-            'userid': self.userid,
+            'userid': self.globalObject.userid,
             'operation': operation
         },
         success: function(message) {
@@ -50,7 +53,7 @@ function getBlogData() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: 'http://127.0.0.1:8000/blog/get-blogdata/?userId=' + self.userid + '&pageNo=' + self.pageNo.toString() + '&type=' + self.type,
+        url: 'http://127.0.0.1:8000/blog/get-blogdata/?userId=' + self.globalObject.userid + '&pageNo=' + self.globalObject.pageNo.toString() + '&type=' + self.globalObject.type,
         success: function(JSONdata) {
             for (var i = 0; i < JSONdata.blogData.length; i++) {
                 var box = document.createElement("div");
@@ -60,28 +63,28 @@ function getBlogData() {
                     "<p class='matter'>" + JSONdata.blogData[i].text + "</p>";
 
                 if (JSONdata.blogList.indexOf(JSONdata.blogData[i].id) > -1) {
-                    box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote' disabled='disabled' id='" + JSONdata.blogData[i].id + "'>Upvote<span class='badge' id='" + JSONdata.blogData[i].id + "_upvotes'>" + JSONdata.blogData[i].upvotes + "</span></button>";
+                    box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote' disabled='disabled' id='" + JSONdata.blogData[i].id + "'>Upvoted<span class='badge' id='" + JSONdata.blogData[i].id + "_upvotes'>" + JSONdata.blogData[i].upvotes + "</span></button>";
                 } else {
                     box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote' id='" + JSONdata.blogData[i].id + "'>Upvote<span class='badge' id='" + JSONdata.blogData[i].id + "_upvotes'>" + JSONdata.blogData[i].upvotes + "</span></button>";
                 }
 
                 box.innerHTML += "<button type='button' class='btn btn-default btn-sm downvote' id='" + JSONdata.blogData[i].id + "_downvote'>Downvote</button>";
 
-                var feedWrapper = document.getElementById("feed-wrapper").appendChild(box);
+                document.getElementById("feed-wrapper").appendChild(box);
 
-                self.blogData.push(JSONdata.blogData[i].id);
+                self.globalObject.blogData.push(JSONdata.blogData[i].id);
             }
-            for (let i = 0; i < self.blogData.length; i++) {
-                blogId = self.blogData[i];
-                console.log(blogId);
-                document.getElementById(blogId.toString()).onclick = function() {
-                    var updatedUpvotes = Number($("#" + self.blogData[i].toString() + "_upvotes").text()) + 1;
-                    $("#" + self.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
-                    changeUpvotes(self.blogData[i], 'upvote');
-                    console.log('clicked button ' + self.blogData[i].toString());
+
+            for (let i = 0; i < self.globalObject.blogData.length; i++) {
+                document.getElementById(self.globalObject.blogData[i].toString()).onclick = function() {
+                    var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) + 1;
+                    $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
+                    $("#" + self.globalObject.blogData[i].toString()).attr('disabled', 'disabled');
+                    $("#" + self.globalObject.blogData[i].toString()).html('Upvoted' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
+                    changeUpvotes(self.globalObject.blogData[i], 'upvote');
+                    console.log('clicked button ' + self.globalObject.blogData[i].toString());
                 };
             }
-            console.log("functions created");
         }
     })
 }
