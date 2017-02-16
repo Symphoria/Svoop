@@ -6,17 +6,6 @@ var globalObject = {
     userid: window.location.href.split("/")[5]
 };
 
-// if (localStorage.getItem("userId") === null) {
-//     var siteURL = window.location.href;
-//     var userid = siteURL.split("/")[5];
-//     localStorage.setItem('userId', userid);
-// } else {
-//     var userid = localStorage.getItem("userId");
-// }
-
-// var siteURL = window.location.href;
-// var userid = siteURL.split("/")[5];
-
 document.addEventListener('DOMContentLoaded', function() {
     $.ajax({
         type: 'GET',
@@ -44,7 +33,7 @@ function changeUpvotes(blogId, operation) {
             'operation': operation
         },
         success: function(message) {
-            alert(message.message);
+            console.log(message.message);
         }
     })
 }
@@ -84,8 +73,44 @@ function getBlogData() {
                     changeUpvotes(self.globalObject.blogData[i], 'upvote');
                     console.log('clicked button ' + self.globalObject.blogData[i].toString());
                 };
+
+                document.getElementById(self.globalObject.blogData[i].toString() + '_downvote').onclick = function() {
+                    var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) - 1;
+                    $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
+                    $("#" + self.globalObject.blogData[i].toString()).removeAttr('disabled');
+                    $("#" + self.globalObject.blogData[i].toString()).html('Upvote' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
+                    changeUpvotes(self.globalObject.blogData[i], 'downvote');
+                    console.log('clicked downvote button ' + self.globalObject.blogData[i].toString());
+                };
+            }
+
+            if (JSONdata.hasPrevious) {
+                $('#previous').removeClass('disabled');
+            } else {
+                $('#previous').addClass('disabled');
+            }
+
+            if (JSONdata.hasNext) {
+                $('#next').removeClass('disabled');
+            } else {
+                $('#next').addClass('disabled');
             }
         }
     })
 }
+
+$('li#next a').click(function() {
+    self.globalObject.pageNo += 1;
+    self.globalObject.blogData = [];
+    $('#feed-wrapper').empty();
+    getBlogData();
+});
+
+$('li#previous a').click(function() {
+    self.globalObject.pageNo -= 1;
+    self.globalObject.blogData = [];
+    $('#feed-wrapper').empty();
+    getBlogData();
+});
+
 console.log('done!!!!!');

@@ -94,7 +94,7 @@ def user_login(request):
                             request.session.set_expiry(0)
                         else:
                             request.session.set_expiry(1300000)
-                        return HttpResponseRedirect(reverse('blog:myaccount', args=(userid,)))
+                        return HttpResponseRedirect(reverse('blog:index', args=(userid,)))
                     else:
                         error_message = 'Incorrect Credentials'
                         return render(request, 'blog/loginform.html', {'error_message': error_message, 'form': form})

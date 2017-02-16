@@ -36,8 +36,8 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username"><span class="username"></span><span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">Logout</a></li>
+                                <li><a href="account">My Account</a></li>
+                                <li><a href="{% url 'blog:logout' %}" id="logout">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -48,19 +48,28 @@
         </div>
     </nav>
 
+    <!-- main body starts -->
     <div class="container">
         <div class="row">
             <div class="col-lg-3 left-wrapper">
                 left-wrapper
             </div>
-            <div class="col-lg-9 feed-wrapper" id="feed-wrapper">
-                <div class="box">
-                    <h1 class="title">Something somethin'</h1>
-                    <hr class="divider">
-                    <p class='matter'>sdoio efinodnfoq jienoqijepqo ofqefhondoaine jkefoenf jjndunwkejfq njdieqfoe djneejfe hiefjniuh sifuvhw jfwiuij nwi jdioweino koiwoifiwoejp ojoi</p>
-                    <button type="button" class="btn btn-primary btn-sm upvote">Upvote<span class="badge">42</span></button>
-                    <button type="button" class="btn btn-default btn-sm downvote">Downvote</button>
+            <div class="col-lg-9 feed-wrapper">
+                <div id="feed-wrapper">
+                    <!-- <div class="box">
+                        <h1 class="title">Something somethin'</h1>
+                        <hr class="divider">
+                        <p class='matter'>sdoio efinodnfoq jienoqijepqo ofqefhondoaine jkefoenf jjndunwkejfq njdieqfoe djneejfe hiefjniuh sifuvhw jfwiuij nwi jdioweino koiwoifiwoejp ojoi</p>
+                        <button type="button" class="btn btn-primary btn-sm upvote">Upvote<span class="badge">42</span></button>
+                        <button type="button" class="btn btn-default btn-sm downvote">Downvote</button>
+                    </div> -->
                 </div>
+                <nav aria-label="paginator" id="pager">
+                    <ul class="pager">
+                        <li class="previous" id="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+                        <li class="next" id="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

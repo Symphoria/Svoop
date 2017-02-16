@@ -29,10 +29,6 @@ ul.navbar-nav.nav>li>a>#podium {
     background-color: #083151;
 }
 
-.feed-wrapper {
-    background-color: white;
-}
-
 .box {
     background-color: white;
     padding-bottom: 25px;
@@ -75,4 +71,8 @@ ul.navbar-nav.nav>li>a>#podium {
 .downvote {
     border: 0px;
     color: #2e6da4;
+}
+
+.pager {
+    margin-top: 40px;
 }
