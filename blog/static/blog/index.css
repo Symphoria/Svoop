@@ -22,19 +22,15 @@ ul.navbar-nav.nav>li>a>#podium {
 }
 
 .dropdown-toggle {
-        margin-top: 4px;
-}
-
-.left-wrapper {
-    background-color: #083151;
+    margin-top: 4px;
 }
 
 .box {
     background-color: white;
     padding-bottom: 25px;
     margin-bottom: 25px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     position: relative;
 }
 
@@ -75,4 +71,20 @@ ul.navbar-nav.nav>li>a>#podium {
 
 .pager {
     margin-top: 40px;
+}
+
+ul.nav.nav-stacked.nav-pills {
+    margin-top: 20px;
+}
+
+#recent>a {
+    padding-left: 100px;
+    border-radius: 70px;
+    margin-bottom: -2px;
+}
+
+#trending>a {
+    padding-left: 95px;
+    border-radius: 70px;
+    margin-bottom: -2px;
 }

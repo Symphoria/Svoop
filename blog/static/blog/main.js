@@ -44,6 +44,9 @@ function getBlogData() {
         dataType: 'json',
         url: 'http://127.0.0.1:8000/blog/get-blogdata/?userId=' + self.globalObject.userid + '&pageNo=' + self.globalObject.pageNo.toString() + '&type=' + self.globalObject.type,
         success: function(JSONdata) {
+            self.globalObject.blogData = [];
+            $('#feed-wrapper').empty();
+
             for (var i = 0; i < JSONdata.blogData.length; i++) {
                 var box = document.createElement("div");
                 box.className = "box";
@@ -101,16 +104,26 @@ function getBlogData() {
 
 $('li#next a').click(function() {
     self.globalObject.pageNo += 1;
-    self.globalObject.blogData = [];
-    $('#feed-wrapper').empty();
     getBlogData();
 });
 
 $('li#previous a').click(function() {
     self.globalObject.pageNo -= 1;
-    self.globalObject.blogData = [];
-    $('#feed-wrapper').empty();
     getBlogData();
 });
+
+$('#recent a').click(function() {
+    $('#trending').removeClass('active');
+    $('#recent').addClass('active');
+    self.globalObject.type = 'recent';
+    getBlogData();
+})
+
+$('#trending a').click(function() {
+    $('#recent').removeClass('active');
+    $('#trending').addClass('active');
+    self.globalObject.type = 'trending';
+    getBlogData();
+})
 
 console.log('done!!!!!');
