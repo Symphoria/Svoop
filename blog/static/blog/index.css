@@ -58,6 +58,13 @@ ul.navbar-nav.nav>li>a>#podium {
 .upvote {
     margin-left: 20px;
     border-radius: 35px;
+    background-color: #5595fc;
+    border-color: #5595fc;
+}
+
+.clicked {
+    background-color: #346DA3;
+    border-color: #346DA3;
 }
 
 .badge {

@@ -55,12 +55,10 @@ function getBlogData() {
                     "<p class='matter'>" + JSONdata.blogData[i].text + "</p>";
 
                 if (JSONdata.blogList.indexOf(JSONdata.blogData[i].id) > -1) {
-                    box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote' disabled='disabled' id='" + JSONdata.blogData[i].id + "'>Upvoted<span class='badge' id='" + JSONdata.blogData[i].id + "_upvotes'>" + JSONdata.blogData[i].upvotes + "</span></button>";
+                    box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote clicked' id='" + JSONdata.blogData[i].id + "'>Upvoted<span class='badge' id='" + JSONdata.blogData[i].id + "_upvotes'>" + JSONdata.blogData[i].upvotes + "</span></button>";
                 } else {
                     box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote' id='" + JSONdata.blogData[i].id + "'>Upvote<span class='badge' id='" + JSONdata.blogData[i].id + "_upvotes'>" + JSONdata.blogData[i].upvotes + "</span></button>";
                 }
-
-                box.innerHTML += "<button type='button' class='btn btn-default btn-sm downvote' id='" + JSONdata.blogData[i].id + "_downvote'>Downvote</button>";
 
                 document.getElementById("feed-wrapper").appendChild(box);
 
@@ -69,21 +67,21 @@ function getBlogData() {
 
             for (let i = 0; i < self.globalObject.blogData.length; i++) {
                 document.getElementById(self.globalObject.blogData[i].toString()).onclick = function() {
-                    var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) + 1;
-                    $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
-                    $("#" + self.globalObject.blogData[i].toString()).attr('disabled', 'disabled');
-                    $("#" + self.globalObject.blogData[i].toString()).html('Upvoted' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
-                    changeUpvotes(self.globalObject.blogData[i], 'upvote');
-                    console.log('clicked button ' + self.globalObject.blogData[i].toString());
-                };
+                    if ($('#' + self.globalObject.blogData[i].toString()).hasClass('clicked')) {
+                        var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) - 1;
+                        $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
+                        $("#" + self.globalObject.blogData[i].toString()).removeClass('clicked');
+                        $("#" + self.globalObject.blogData[i].toString()).html('Upvote' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
+                        changeUpvotes(self.globalObject.blogData[i], 'downvote');
+                    } else {
+                        var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) + 1;
+                        $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
+                        $("#" + self.globalObject.blogData[i].toString()).addClass('clicked');
+                        $("#" + self.globalObject.blogData[i].toString()).html('Upvoted' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
+                        changeUpvotes(self.globalObject.blogData[i], 'upvote');
+                    }
 
-                document.getElementById(self.globalObject.blogData[i].toString() + '_downvote').onclick = function() {
-                    var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) - 1;
-                    $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
-                    $("#" + self.globalObject.blogData[i].toString()).removeAttr('disabled');
-                    $("#" + self.globalObject.blogData[i].toString()).html('Upvote' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
-                    changeUpvotes(self.globalObject.blogData[i], 'downvote');
-                    console.log('clicked downvote button ' + self.globalObject.blogData[i].toString());
+                    console.log('clicked button ' + self.globalObject.blogData[i].toString());
                 };
             }
 
