@@ -95,3 +95,14 @@ ul.nav.nav-stacked.nav-pills {
     border-radius: 70px;
     margin-bottom: -2px;
 }
+
+.nav.nav-pills.nav-stacked>p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
+    margin-top: 200px;
+    margin-left: 35px;
+}
+
+.write {
+    border-radius: 80px;
+}

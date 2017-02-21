@@ -70,14 +70,14 @@ function getBlogData() {
                     if ($('#' + self.globalObject.blogData[i].toString()).hasClass('clicked')) {
                         var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) - 1;
                         $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
-                        $("#" + self.globalObject.blogData[i].toString()).removeClass('clicked');
-                        $("#" + self.globalObject.blogData[i].toString()).html('Upvote' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
+                        $(this).removeClass('clicked');
+                        $(this).html('Upvote' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
                         changeUpvotes(self.globalObject.blogData[i], 'downvote');
                     } else {
                         var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) + 1;
                         $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
-                        $("#" + self.globalObject.blogData[i].toString()).addClass('clicked');
-                        $("#" + self.globalObject.blogData[i].toString()).html('Upvoted' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
+                        $(this).addClass('clicked');
+                        $(this).html('Upvoted' + "<span class='badge' id='" + self.globalObject.blogData[i].toString() + "_upvotes'>" + updatedUpvotes.toString() + "</span>");
                         changeUpvotes(self.globalObject.blogData[i], 'upvote');
                     }
 
@@ -115,13 +115,13 @@ $('#recent a').click(function() {
     $('#recent').addClass('active');
     self.globalObject.type = 'recent';
     getBlogData();
-})
+});
 
 $('#trending a').click(function() {
     $('#recent').removeClass('active');
     $('#trending').addClass('active');
     self.globalObject.type = 'trending';
     getBlogData();
-})
+});
 
 console.log('done!!!!!');

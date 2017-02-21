@@ -128,7 +128,8 @@ def my_account(request, userid):
             all_blogs = user.blogdata_set.all()[0]
         except IndexError:
             return render(request, 'blog/myaccount.html',
-                          {'message': "You have not created any blog.Click on Create Blog to create a blog", 'user': user})
+                          {'message': "You have not created any blog.Click on Create Blog to create a blog",
+                           'user': user})
         if len(user.blogdata_set.filter(published_date=None)) != 0:
             saved_blogs = user.blogdata_set.filter(published_date=None).order_by('-created_date')
             message = 'You have some unpublished blogs'
@@ -185,7 +186,7 @@ def publish_blog(request, userid, blogid):
 
 
 def index_view(request, userid):
-    if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False:
+    if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False or str(request.session['user_id']) != userid:
         return HttpResponseRedirect(reverse('blog:login'))
     else:
         return render(request, 'blog/index.html')
