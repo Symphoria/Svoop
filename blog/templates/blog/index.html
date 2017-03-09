@@ -36,7 +36,7 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username"><span class="username"></span><span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="account">My Account</a></li>
+                                <li><a href="account" id="account">My Account</a></li>
                                 <li><a href="{% url 'blog:logout' %}" id="logout">Logout</a></li>
                             </ul>
                         </li>
@@ -80,6 +80,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="{% static 'blog/main.js' %}"></script>
 </body>

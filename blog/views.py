@@ -264,17 +264,21 @@ class AllBlogView(APIView):
         user_id = request.GET['userId']
         page_no = int(request.GET['pageNo'])
         type = request.GET['type']
+        location = request.GET['location']
 
         user = get_object_or_404(User, pk=user_id)
         blog_id_list = [blog.id for blog in user.blogdata_set.all()]
         upvoted_blog_list = [blog.id for blog in user.upvoted_blogs.all()]
 
-        if type == 'recent':
-            blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
-                '-published_date')
+        if location == 'feed':
+            if type == 'recent':
+                blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
+                    '-published_date')
+            else:
+                blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
+                    '-upvotes')
         else:
-            blog_queryset = BlogData.objects.exclude(id__in=blog_id_list).exclude(published_date=None).order_by(
-                '-upvotes')
+            blog_queryset = user.blogdata_set.exclude(published_date=None).order_by('-published_date')
 
         paginator = Paginator(blog_queryset, 10)
         try:

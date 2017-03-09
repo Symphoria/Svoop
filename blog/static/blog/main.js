@@ -6,16 +6,24 @@ var globalObject = {
     userid: window.location.href.split("/")[5]
 };
 
+if (window.location.href.split('/').reverse()[1] == 'account') {
+    globalObject.location = 'account'
+} else {
+    globalObject.location = 'feed'
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: 'http://127.0.0.1:8000/blog/user-data/?userId=' + self.globalObject.userid,
+        url: 'http://127.0.0.1:8000/svoop/user-data/?userId=' + self.globalObject.userid,
         success: function(data) {
-            var userName = data.user.username;
-            var imageURL = data.imageURL;
+            var userName = data.user.username,
+                imageURL = data.imageURL;
             $('.username').text(userName);
-            document.getElementById("Userimage").src = imageURL;
+            $('#Userimage').attr('src', imageURL);
+            $('#Userimagebig').attr('src', imageURL);
+            $('#left-wrapper-username').text(userName);
         }
     });
 
@@ -24,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function changeUpvotes(blogId, operation) {
     $.ajax({
-        url: 'http://127.0.0.1:8000/blog/update-upvotes/',
+        url: 'http://127.0.0.1:8000/svoop/update-upvotes/',
         type: 'PUT',
         dataType: 'json',
         data: {
@@ -42,7 +50,7 @@ function getBlogData() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: 'http://127.0.0.1:8000/blog/get-blogdata/?userId=' + self.globalObject.userid + '&pageNo=' + self.globalObject.pageNo.toString() + '&type=' + self.globalObject.type,
+        url: 'http://127.0.0.1:8000/svoop/get-blogdata/?userId=' + self.globalObject.userid + '&pageNo=' + self.globalObject.pageNo.toString() + '&type=' + self.globalObject.type + '&location=' + self.globalObject.location,
         success: function(JSONdata) {
             self.globalObject.blogData = [];
             $('#feed-wrapper').empty();
@@ -60,7 +68,7 @@ function getBlogData() {
                     box.innerHTML += "<button type='button' class='btn btn-primary btn-sm upvote' id='" + JSONdata.blogData[i].id + "'>Upvote<span class='badge' id='" + JSONdata.blogData[i].id + "_upvotes'>" + JSONdata.blogData[i].upvotes + "</span></button>";
                 }
 
-                document.getElementById("feed-wrapper").appendChild(box);
+                $(box).hide().appendTo('#feed-wrapper').fadeIn(400);
 
                 self.globalObject.blogData.push(JSONdata.blogData[i].id);
             }
