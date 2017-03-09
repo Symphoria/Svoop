@@ -258,6 +258,20 @@ class UserDataView(APIView):
         else:
             return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
+    def put(self, request):
+        user_id = request.data['userId']
+        current_password = request.META['HTTP_CURRENTPASSWORD']
+        new_password = request.META['HTTP_NEWPASSWORD']
+
+        user = get_object_or_404(User, pk=user_id)
+
+        if user.password == current_password:
+            user.password = new_password
+            user.save()
+            return Response({'message': 'Password Changed'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'message': 'Current Password Does Not Match'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
 
 class AllBlogView(APIView):
     def get(self, request):

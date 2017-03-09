@@ -76,19 +76,22 @@
                             <h4 class="modal-title" id="myModalLabel" style="margin-left: 210px;">Change Password</h4>
                         </div>
                         <div class="modal-body">
+                            <form id="changePasswordForm">
                                 <div class="form-group">
                                     <label for="currentPassword">Current Password</label>
                                     <input type="password" class="form-control" id="currentPassword" placeholder="Write Your Current Password">
                                 </div>
                                 <div class="form-group">
                                     <label for="newPassword">New Password</label>
-                                    <input type="password" class="form-control" id="newPassword" placeholder="Write Your New Password">
+                                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Write Your New Password">
                                 </div>
                                 <div class="form-group">
                                     <label for="confirmPassword">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Write Your New Password Again">
+                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Write Your New Password Again">
                                 </div>
-                                <button class="btn btn-success" style="margin-left: 250px;">Submit</button>
+                                <p style="color: #e62222" id="changePasswordError"></p>
+                            </form>
+                            <button class="btn btn-success" style="margin-left: 250px;" id="changePasswordSubmit" data-loading-text="Submitting..." autocomplete="off">Submit</button>
                         </div>
                     </div>
                 </div>

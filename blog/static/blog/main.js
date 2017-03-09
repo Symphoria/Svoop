@@ -12,12 +12,12 @@ if (window.location.href.split('/').reverse()[1] == 'account') {
     globalObject.location = 'feed'
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     $.ajax({
         type: 'GET',
         dataType: 'json',
         url: 'http://127.0.0.1:8000/svoop/user-data/?userId=' + self.globalObject.userid,
-        success: function(data) {
+        success: function (data) {
             var userName = data.user.username,
                 imageURL = data.imageURL;
             $('.username').text(userName);
@@ -40,7 +40,7 @@ function changeUpvotes(blogId, operation) {
             'userid': self.globalObject.userid,
             'operation': operation
         },
-        success: function(message) {
+        success: function (message) {
             console.log(message.message);
         }
     })
@@ -51,7 +51,7 @@ function getBlogData() {
         type: 'GET',
         dataType: 'json',
         url: 'http://127.0.0.1:8000/svoop/get-blogdata/?userId=' + self.globalObject.userid + '&pageNo=' + self.globalObject.pageNo.toString() + '&type=' + self.globalObject.type + '&location=' + self.globalObject.location,
-        success: function(JSONdata) {
+        success: function (JSONdata) {
             self.globalObject.blogData = [];
             $('#feed-wrapper').empty();
 
@@ -74,7 +74,7 @@ function getBlogData() {
             }
 
             for (let i = 0; i < self.globalObject.blogData.length; i++) {
-                document.getElementById(self.globalObject.blogData[i].toString()).onclick = function() {
+                document.getElementById(self.globalObject.blogData[i].toString()).onclick = function () {
                     if ($('#' + self.globalObject.blogData[i].toString()).hasClass('clicked')) {
                         var updatedUpvotes = Number($("#" + self.globalObject.blogData[i].toString() + "_upvotes").text()) - 1;
                         $("#" + self.globalObject.blogData[i].toString() + "_upvotes").text(updatedUpvotes.toString());
@@ -108,28 +108,98 @@ function getBlogData() {
     })
 }
 
-$('li#next a').click(function() {
+$('li#next a').click(function () {
     self.globalObject.pageNo += 1;
     getBlogData();
 });
 
-$('li#previous a').click(function() {
+$('li#previous a').click(function () {
     self.globalObject.pageNo -= 1;
     getBlogData();
 });
 
-$('#recent a').click(function() {
+$('#recent a').click(function () {
     $('#trending').removeClass('active');
     $('#recent').addClass('active');
     self.globalObject.type = 'recent';
     getBlogData();
 });
 
-$('#trending a').click(function() {
+$('#trending a').click(function () {
     $('#recent').removeClass('active');
     $('#trending').addClass('active');
     self.globalObject.type = 'trending';
     getBlogData();
+});
+
+// I know this function is shit. But I am just feeling so lazy to do it any other efficient way :(
+function validateForm() {
+    var flag1 = 0, flag2 = 0;
+    if ($('#currentPassword').val().length === 0) {
+        flag1 = 1;
+        $('#currentPassword').css('border-color', '#e62222');
+    } else {
+        $('#currentPassword').css('border-color', '');
+    }
+    if ($('#newPassword').val().length === 0) {
+        flag1 = 1;
+        $('#newPassword').css('border-color', '#e62222');
+    } else {
+        $('#newPassword').css('border-color', '');
+    }
+    if ($('#confirmPassword').val().length === 0) {
+        flag1 = 1;
+        $('#confirmPassword').css('border-color', '#e62222');
+    } else {
+        $('#confirmPassword').css('border-color', '');
+    }
+    if ($('#newPassword').val() !== $('#confirmPassword').val()) {
+        flag2 = 1;
+        $('#confirmPassword').css('border-color', '#e62222');
+    } else {
+        $('#confirmPassword').css('border-color', '');
+    }
+    if (flag1) {
+        $('#changePasswordError').html("<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Some Fields are Empty");
+        return false;
+    } else if (flag2) {
+        $('#changePasswordError').html("<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Passwords Do Not Match");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+$('#changePasswordSubmit').click(function () {
+    if (validateForm()) {
+        var $btn = $(this).button('loading');
+
+        $.ajax({
+            type: 'PUT',
+            dataType: 'json',
+            url: 'http://127.0.0.1:8000/svoop/user-data/',
+            data: {
+                'userId': self.globalObject.userid
+            },
+            headers: {
+                'currentPassword': $('#currentPassword').val(),
+                'newPassword': $('#newPassword').val()
+            },
+            success: function(message) {
+                $btn.button('reset');
+                $('#changePasswordModal').modal('hide');
+                $('#currentPassword').val('');
+                $('#newPassword').val('');
+                $('#confirmPassword').val('');
+                console.log(message);
+            },
+            error: function(message) {
+                $btn.button('reset');
+                $('#changePasswordError').html("<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Current Password Does Not Match");
+                console.log(message);
+            }
+        })
+    }
 });
 
 console.log('done!!!!!');
