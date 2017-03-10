@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Svoop</title>
+    <script src="https://use.fontawesome.com/19fb39091d.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/myaccount.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Quicksand|Permanent+Marker" rel="stylesheet">
@@ -55,19 +56,18 @@
                 <img id="Userimagebig" alt="UserImage" src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png">
                 <span id="left-wrapper-username"></span>
                 <hr style="margin-top: 5px;border-color: #424344;background-color: #42434">
+                <p id="change">Change...</p>
                 <!-- Password Change trigger modal -->
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changePasswordModal" id="changePasswordButton">
-                    Change Password
+                <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal" data-target="#changePasswordModal" id="changePasswordButton"
+                 data-tooltip="tooltip" data-placement="bottom" title="Change Password">
+                    <i class="fa fa-unlock-alt" aria-hidden="true" style="font-size: 25px;"></i>
                 </button>
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changeImageModal" id="changeImageButton">
-                    Change Image
+                <!-- User Image trigger modal -->
+                <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal" data-target="#changeImageModal" id="changeImageButton"
+                 data-tooltip="tooltip" data-placement="bottom" title="Change Image">
+                    <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 25px;"></i>
                 </button>
-                <!-- <form action="{% url 'blog:set_image' user.id %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <label for="id_image">Choose a image</label>
-                    <input type="file" name="image" id="id_image">
-                    <input type="submit" value="Upload">
-                </form> -->
+                <button type="button" class="btn btn-info btn-lg btn-block" id="goPodium" style="margin-top: 100px;">The Podium  <i class="fa fa-rocket" aria-hidden="true"></i></button>
             </div>
 
             <!-- Password Change Modal -->
@@ -106,7 +106,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            <h4 class="modal-title" id="myModalLabel">Change Profile Image</h4>
                         </div>
                         <div class="modal-body">
                             <form action="{% url 'blog:set_image' user.id %}" method="post" enctype="multipart/form-data">

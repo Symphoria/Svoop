@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    $('[data-tooltip="tooltip"]').tooltip();
     getBlogData();
 });
 
@@ -207,8 +208,13 @@ $(document).on('click', '.browse', function() {
     var file = $(this).parent().parent().parent().find('.file');
     file.trigger('click');
 });
+
 $(document).on('change', '.file', function() {
     $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+});
+
+$('#goPodium').click(function() {
+    window.location.href = 'http://127.0.0.1:8000/svoop/login/' + self.globalObject.userid;
 });
 
 console.log('done!!!!!');
