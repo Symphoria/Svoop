@@ -5,154 +5,228 @@
 <head>
     <meta charset="UTF-8">
     <title>Svoop</title>
-    <script src="https://use.fontawesome.com/19fb39091d.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/myaccount.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Quicksand|Permanent+Marker" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{% url 'blog:home' %}" id="brand">Svoop</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#"><span id="myaccount">My Account</span></a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><img id="Userimage" alt="UserImage" src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png">
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username"><span class="username"></span><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="account">My Account</a></li>
-                                <li><a href="{% url 'blog:logout' %}" id="logout">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-    </nav>
-
-    <!-- main body starts -->
+<nav class="navbar navbar-default">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3 left-wrapper">
-                <img id="Userimagebig" alt="UserImage" src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png">
-                <span id="left-wrapper-username"></span>
-                <hr style="margin-top: 5px;border-color: #424344;background-color: #42434">
-                <p id="change">Change...</p>
-                <!-- Password Change trigger modal -->
-                <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal" data-target="#changePasswordModal" id="changePasswordButton"
-                 data-tooltip="tooltip" data-placement="bottom" title="Change Password">
-                    <i class="fa fa-unlock-alt" aria-hidden="true" style="font-size: 25px;"></i>
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                <!-- User Image trigger modal -->
-                <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal" data-target="#changeImageModal" id="changeImageButton"
-                 data-tooltip="tooltip" data-placement="bottom" title="Change Image">
-                    <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 25px;"></i>
-                </button>
-                <button type="button" class="btn btn-info btn-lg btn-block" id="goPodium" style="margin-top: 100px;">The Podium  <i class="fa fa-rocket" aria-hidden="true"></i></button>
+                <a class="navbar-brand" href="{% url 'blog:home' %}" id="brand">Svoop</a>
             </div>
 
-            <!-- Password Change Modal -->
-            <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel" style="margin-left: 210px;">Change Password</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="changePasswordForm">
-                                <div class="form-group">
-                                    <label for="currentPassword">Current Password</label>
-                                    <input type="password" class="form-control" id="currentPassword" placeholder="Write Your Current Password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="newPassword">New Password</label>
-                                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Write Your New Password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="confirmPassword">Confirm Password</label>
-                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Write Your New Password Again">
-                                </div>
-                                <p style="color: #e62222" id="changePasswordError"></p>
-                            </form>
-                            <button class="btn btn-success" style="margin-left: 250px;" id="changePasswordSubmit" data-loading-text="Submitting..." autocomplete="off">Submit</button>
-                        </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#"><span id="myaccount">My Account</span></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><img id="Userimage" alt="UserImage"
+                             src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png">
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false" id="username"><span class="username"></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="account">My Account</a></li>
+                            <li><a href="{% url 'blog:logout' %}" id="logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+</nav>
+
+<!-- main body starts -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 left-wrapper">
+            <img id="Userimagebig" alt="UserImage"
+                 src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png">
+            <span id="left-wrapper-username"></span>
+            <hr style="margin-top: 5px;border-color: #424344;background-color: #42434">
+            <p id="change">Change...</p>
+            <!-- Password Change trigger modal -->
+            <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal"
+                    data-target="#changePasswordModal" id="changePasswordButton"
+                    data-tooltip="tooltip" data-placement="bottom" title="Change Password">
+                <i class="fa fa-unlock-alt" aria-hidden="true" style="font-size: 25px;"></i>
+            </button>
+            <!-- User Image trigger modal -->
+            <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal"
+                    data-target="#changeImageModal" id="changeImageButton"
+                    data-tooltip="tooltip" data-placement="bottom" title="Change Image">
+                <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 25px;"></i>
+            </button>
+
+            <hr style="margin-top: 40px;border-color: #424344;background-color: #42434">
+
+            <!-- New Post trigger modal -->
+            <button type="button" class="btn btn-success btn-lg btn-block" id="write" style="margin-top: 10px;"
+                    data-toggle="modal" data-target="#newPost">Write Something <i class="fa fa-pencil"
+                                                                                  aria-hidden="true"></i></button>
+
+            <button type="button" class="btn btn-info btn-lg btn-block" id="goPodium" style="margin-top: 10px;">The
+                Podium <i class="fa fa-microphone" aria-hidden="true"></i></button>
+        </div>
+
+        <!-- Password Change Modal -->
+        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+             aria-labelledby="changePasswordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel" style="margin-left: 210px;">Change Password</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="changePasswordForm">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" class="form-control" id="currentPassword"
+                                       placeholder="Write Your Current Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" class="form-control" name="newPassword" id="newPassword"
+                                       placeholder="Write Your New Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+                                       placeholder="Write Your New Password Again">
+                            </div>
+                            <p style="color: #e62222" id="changePasswordError"></p>
+                        </form>
+                        <button class="btn btn-success" style="margin-left: 250px;" id="changePasswordSubmit"
+                                data-loading-text="Submitting..." autocomplete="off">Submit
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- User Image Change Modal -->
-            <div class="modal fade" id="changeImageModal" tabindex="-1" role="dialog" aria-labelledby="changeImageModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Change Profile Image</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{% url 'blog:set_image' user.id %}" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <input type="file" name="image" class="file">
-                                    <div class="input-group col-xs-12">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-                                        <input type="text" class="form-control input-lg" disabled placeholder="Upload Image">
+        <!-- User Image Change Modal -->
+        <div class="modal fade" id="changeImageModal" tabindex="-1" role="dialog"
+             aria-labelledby="changeImageModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Change Profile Image</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'blog:set_image' user.id %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="file" name="image" class="file">
+                                <div class="input-group col-xs-12">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                                    <input type="text" class="form-control input-lg" disabled
+                                           placeholder="Upload Image">
                                         <span class="input-group-btn">
-                                        <button class="browse btn btn-primary input-lg" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>
+                                        <button class="browse btn btn-primary input-lg" type="button"><i
+                                                class="glyphicon glyphicon-search"></i> Browse</button>
                                     </span>
-                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-success" style="margin-left: 250px;" id="changeImageSubmit" data-loading-text="Uploading..." autocomplete="off">Upload</button>
-                            </form>
-                        </div>
+                            </div>
+                            <button type="submit" class="btn btn-success" style="margin-left: 250px;"
+                                    id="changeImageSubmit" data-loading-text="Uploading..." autocomplete="off">Upload
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
-
-            <div class="col-lg-9 feed-wrapper">
-                <div id="feed-wrapper">
-                    <!-- <div class="box">
-                        <h1 class="title">Something somethin'</h1>
-                        <hr class="divider">
-                        <p class='matter'>sdoio efinodnfoq jienoqijepqo ofqefhondoaine jkefoenf jjndunwkejfq njdieqfoe djneejfe hiefjniuh sifuvhw jfwiuij nwi jdioweino koiwoifiwoejp ojoi</p>
-                        <button type="button" class="btn btn-primary btn-sm upvote">Upvote<span class="badge">42</span></button>
-                        <button type="button" class="btn btn-default btn-sm downvote">Downvote</button>
-                    </div> -->
+        <!-- New Post Modal -->
+        <div class="modal fade" id="newPost" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Start Writing</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="author-name" class="col-sm-2 control-label">Author</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="author-name" placeholder="Author Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="title-name" class="col-sm-2 control-label">Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="title-name"
+                                           placeholder="Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="main-body" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="10" id="main-body" placeholder="Pour your thoughts here"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">Sign in</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <nav aria-label="paginator" id="pager">
-                    <ul class="pager">
-                        <li class="previous" id="previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                        <li class="next" id="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
-                    </ul>
-                </nav>
             </div>
+        </div>
+
+
+        <div class="col-lg-9 feed-wrapper">
+            <div id="feed-wrapper">
+                <!-- <div class="box">
+                    <h1 class="title">Something somethin'</h1>
+                    <hr class="divider">
+                    <p class='matter'>sdoio efinodnfoq jienoqijepqo ofqefhondoaine jkefoenf jjndunwkejfq njdieqfoe djneejfe hiefjniuh sifuvhw jfwiuij nwi jdioweino koiwoifiwoejp ojoi</p>
+                    <button type="button" class="btn btn-primary btn-sm upvote">Upvote<span class="badge">42</span></button>
+                    <button type="button" class="btn btn-default btn-sm downvote">Downvote</button>
+                </div> -->
+            </div>
+            <nav aria-label="paginator" id="pager">
+                <ul class="pager">
+                    <li class="previous" id="previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a>
+                    </li>
+                    <li class="next" id="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
         </div>
     </div>
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="{% static 'blog/main.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://use.fontawesome.com/19fb39091d.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="{% static 'blog/main.js' %}"></script>
 </body>
 
 </html>

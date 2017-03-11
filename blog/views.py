@@ -314,3 +314,18 @@ class AllBlogView(APIView):
         }
 
         return Response(json, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        user_id = request.data['userId']
+        author = request.data['author']
+        title = request.data['title']
+        body = request.data['mainBody']
+
+        user = User.objects.filter(pk=user_id).first()
+
+        if user:
+            a_post = user.blogdata_set.create(author=author, title=title, text=body)
+            a_post.publish()
+            return Response({'message': 'Entry Created'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'message': 'Some Error Occurred'}, status=status.HTTP_404_NOT_FOUND)
