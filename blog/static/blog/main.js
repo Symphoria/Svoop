@@ -204,6 +204,57 @@ $('#changePasswordSubmit').click(function() {
     }
 });
 
+function validateNewPostForm() {
+    var flag = 0;
+    if ($('#title-name').val().length === 0) {
+        flag = 1;
+        $(this).css('border-color', '#e62222');
+    }
+    if ($('#main-body').val().length === 0) {
+        flag = 1;
+        $(this).css('border-color', '#e62222');
+    }
+    if (flag) {
+        $('#newPostError').html("<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Some Fields are Empty");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+$('#newPostSubmit').click(function() {
+    if (validateNewPostForm()) {
+        var $btn = $(this).button('loading');
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: 'http://127.0.0.1:8000/svoop/get-blogdata/',
+            data: {
+                "userId": self.globalObject.userid,
+                "author": $('#author-name').val(),
+                "title": $('#title-name').val(),
+                "mainBody": $('#main-body').val()
+            },
+            success: function(message) {
+                $btn.button('reset');
+                $('#newPostModal').modal('hide');
+                $('#author-name').val('');
+                $('#title-name').val('');
+                $('#main-body').val('');
+                $('#newPostError').text = '';
+                getBlogData();
+                console.log(message);
+            },
+            error: function(message) {
+                $btn.button('reset');
+                $('#newPostError').html("<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Current Password Does Not Match");
+                console.log(message);
+            }
+        })
+    }
+});
+
 $(document).on('click', '.browse', function() {
     var file = $(this).parent().parent().parent().find('.file');
     file.trigger('click');

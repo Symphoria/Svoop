@@ -147,46 +147,9 @@ def my_account(request, userid):
                        'image_url': image_url})
 
 
-def new_blog(request, userid):
-    user = User.objects.get(pk=userid)
-    form = BlogForm()
-    return render(request, 'blog/blogform.html', {'form': form, 'user': user})
-
-
-def save_blog(request, userid, blogid=0):
-    form = BlogForm(request.POST)
-    user = get_object_or_404(User, pk=userid)
-    if form.is_valid():
-        author_name = form.cleaned_data['author_name']
-        title = form.cleaned_data['title']
-        body = form.cleaned_data['body']
-        if len(user.blogdata_set.filter(pk=blogid)) == 1:
-            a_blog = get_object_or_404(BlogData, pk=blogid)
-            a_blog.author = author_name
-            a_blog.title = title
-            a_blog.text = body
-            a_blog.save()
-        else:
-            user.blogdata_set.create(author=author_name, title=title, text=body)
-    return render(request, 'blog/saveform.html', {'user': user})
-
-
-def edit_blog(request, userid, blogid):
-    user = get_object_or_404(User, pk=userid)
-    a_blog = get_object_or_404(BlogData, pk=blogid)
-    form = BlogForm({'author_name': a_blog.author, 'title': a_blog.title, 'body': a_blog.text})
-    return render(request, 'blog/editform.html', {'form': form, 'user': user, 'a_blog': a_blog})
-
-
-def publish_blog(request, userid, blogid):
-    user = get_object_or_404(User, pk=userid)
-    a_blog = get_object_or_404(BlogData, pk=blogid)
-    a_blog.publish()
-    return render(request, 'blog/publish.html', {'user': user, 'a_blog': a_blog})
-
-
 def index_view(request, userid):
-    if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False or str(request.session['user_id']) != userid:
+    if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False or str(
+            request.session['user_id']) != userid:
         return HttpResponseRedirect(reverse('blog:login'))
     else:
         return render(request, 'blog/index.html')
