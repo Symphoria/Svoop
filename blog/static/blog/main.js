@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: 'http://127.0.0.1:8000/svoop/user-data/?userId=' + self.globalObject.userid,
+        url: 'http://svoop.herokuapp.com/svoop/user-data/?userId=' + self.globalObject.userid,
         success: function(data) {
             var userName = data.user.username,
                 imageURL = data.imageURL;
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function changeUpvotes(blogId, operation) {
     $.ajax({
-        url: 'http://127.0.0.1:8000/svoop/update-upvotes/',
+        url: 'http://svoop.herokuapp.com/svoop/update-upvotes/',
         type: 'PUT',
         dataType: 'json',
         data: {
@@ -51,7 +51,7 @@ function getBlogData() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: 'http://127.0.0.1:8000/svoop/get-blogdata/?userId=' + self.globalObject.userid + '&pageNo=' + self.globalObject.pageNo.toString() + '&type=' + self.globalObject.type + '&location=' + self.globalObject.location,
+        url: 'http://svoop.herokuapp.com/svoop/get-blogdata/?userId=' + self.globalObject.userid + '&pageNo=' + self.globalObject.pageNo.toString() + '&type=' + self.globalObject.type + '&location=' + self.globalObject.location,
         success: function(JSONdata) {
             self.globalObject.blogData = [];
             $('#feed-wrapper').empty();
@@ -179,7 +179,7 @@ $('#changePasswordSubmit').click(function() {
         $.ajax({
             type: 'PUT',
             dataType: 'json',
-            url: 'http://127.0.0.1:8000/svoop/user-data/',
+            url: 'http://svoop.herokuapp.com/svoop/user-data/',
             data: {
                 'userId': self.globalObject.userid
             },
@@ -229,7 +229,7 @@ $('#newPostSubmit').click(function() {
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: 'http://127.0.0.1:8000/svoop/get-blogdata/',
+            url: 'http://svoop.herokuapp.com/svoop/get-blogdata/',
             data: {
                 "userId": self.globalObject.userid,
                 "author": $('#author-name').val(),
@@ -265,7 +265,7 @@ $(document).on('change', '.file', function() {
 });
 
 $('#goPodium').click(function() {
-    window.location.href = 'http://127.0.0.1:8000/svoop/login/' + self.globalObject.userid;
+    window.location.href = 'http://svoop.herokuapp.com/svoop/login/' + self.globalObject.userid;
 });
 
 console.log('done!!!!!');
