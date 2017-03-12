@@ -1,0 +1,32 @@
+body {
+    background: #42087f;
+}
+
+#heading {
+    color: white;
+    align-self: center;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 70px;
+}
+
+.container {
+    background-color: white;
+    font-family: 'Lato', sans-serif;
+    background-color: white;
+    height: 542px;
+    width: 1000px !important;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+p {
+    font-size: 30px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#login {
+    margin: 0 auto;
+    display: block;
+}

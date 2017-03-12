@@ -1,0 +1,88 @@
+body {
+    background-image: url("homepage.jpg");
+    background-size: cover;
+}
+
+p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 55px;
+    color: #edefee;
+    margin-left: 159px;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 130px;
+    color: #edefee;
+    margin-left: 170px;
+    margin-top: 150px;
+}
+
+#brand {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 54px;
+    color: white;
+    margin-left: 20px;
+    margin-top: 10px;
+    text-decoration: none;
+    border: none;
+}
+
+#signup {
+    margin-left: 1050px;
+    margin-top: -32px;
+}
+
+#login {
+    margin-left: 1160px;
+    margin-top: -62px;
+}
+
+.btn-default {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 20px;
+}
+
+.btn-default:hover, .btn-default:focus {
+    border-radius: 0px;
+    background: none;
+    border-bottom: 2px solid white;
+    color: white;
+}
+
+.btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+    border-radius: 0px !important;
+    background: none !important;
+    border-bottom: 2px solid #091933 !important;
+    color: #091933 !important;
+}
+
+.sometext {
+    margin-left: 60%;
+}
+
+.btn-primary {
+    background: none;
+    ;
+    border-radius: 50px;
+    width: 250px;
+    margin-left: 250px;
+    border: 2px solid whitesmoke;
+    margin-top: 17px;
+    font-weight: 500;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background: rgba(234, 239, 236, 0.1);
+    border-color: white;
+    border-radius: 50px;
+}
+
+.btn-primary:active, .btn-primary.active {
+    background: white !important;
+    border-color: white !important;
+    border-radius: 50px !important;
+    color: black !important;
+}

@@ -1,0 +1,108 @@
+#Userimage {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-top: 9px;
+}
+
+#brand {
+    font-size: 44px;
+    font-family: 'Permanent Marker', cursive;
+}
+
+#username>.username {
+    font-size: 17px;
+    margin-top: 3px;
+}
+
+ul.navbar-nav.nav>li>a>#podium {
+    margin-left: 343px;
+    font-size: 40px;
+    font-family: 'Quicksand', cursive;
+}
+
+.dropdown-toggle {
+    margin-top: 4px;
+}
+
+.box {
+    background-color: white;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    position: relative;
+}
+
+.title {
+    padding-left: 20px;
+    padding-top: 20px;
+    font-size: 32px;
+    padding-right: 20px;
+    font-family: 'Quicksand', cursive;
+}
+
+.matter {
+    padding-left: 20px;
+    font-size: 16px;
+    padding-right: 20px;
+    padding-bottom: 15px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.divider {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.upvote {
+    margin-left: 20px;
+    border-radius: 35px;
+    background-color: #5595fc;
+    border-color: #5595fc;
+}
+
+.clicked {
+    background-color: #346DA3;
+    border-color: #346DA3;
+}
+
+.badge {
+    margin-left: 5px;
+}
+
+.downvote {
+    border: 0px;
+    color: #2e6da4;
+}
+
+.pager {
+    margin-top: 40px;
+}
+
+ul.nav.nav-stacked.nav-pills {
+    margin-top: 20px;
+}
+
+#recent>a {
+    padding-left: 100px;
+    border-radius: 70px;
+    margin-bottom: -2px;
+}
+
+#trending>a {
+    padding-left: 95px;
+    border-radius: 70px;
+    margin-bottom: -2px;
+}
+
+.nav.nav-pills.nav-stacked>p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
+    margin-top: 200px;
+    margin-left: 35px;
+}
+
+.write {
+    border-radius: 80px;
+}
