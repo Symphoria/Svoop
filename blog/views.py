@@ -68,7 +68,7 @@ def get_form_data(request):
                 return render(request, 'blog/form.html', {'error_message': error_message, 'form': form}, )
             else:
                 newuser = User.objects.create(username=username, password=password, email=email)
-                confirmation_url = "http://127.0.0.1:8000/blog/confirm/" + str(newuser.id)
+                confirmation_url = "http://svoop.herokuapp.com/blog/confirm/" + str(newuser.id)
                 send_mail_to_user(newuser.email, confirmation_url)
                 return HttpResponseRedirect(reverse('blog:thanks'))
     else:
