@@ -9,5 +9,5 @@ python-http-client==2.2.1
 requests==2.12.3
 sendgrid==3.6.3
 six==1.10.0
-urllib3==1.19.1
+urllib3==1.26.5
 whitenoise==3.3.0
